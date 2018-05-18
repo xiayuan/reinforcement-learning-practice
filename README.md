@@ -1,7 +1,14 @@
-# reinforcement-learning-practice
-reinforcement-learning practice
+# Reinforcement-Learning-Practice
+Reinforcement-Learning Practice
 
 在Pong这个案例
+
+atari game raw pixel  (210 x 160 x3)
+
+policy network
+
+构建一个2层神经网络拟合一个分布p (distribution p of sample up/down action in game), 每次迭代从p从sample一个action
+
 * supervised learning在每一个action上的标签， up/down 是否正确；
 * reinforcement learning上，由于在game结束之前，每一个action的label是不知道的，因此，RL在这里先假设一个action的分布（比如，up:0.7,down:0.3)，然后通过这个分布采样获取action，比如得到up， 那么认为此时的label为+1，并记录相应的梯度，用于反向传播。这样在game结束之后，每一个action都会有一个label，虽然这个label是采样得到的，但可以根据game最终结果来更新这一系列的动作。
 
@@ -37,6 +44,7 @@ s2  | y2 |  logp(y2\|x2) | a_2 logp(y2\|x2)
 sn  | yn |  logp(yn\|xn) | a_n logp(yn\|xn)
 
 In general RL, receive some reward r_t at every time step
+
 最终结果需要计算折现率γ  \[a1,a2,...,an\]
 
  
