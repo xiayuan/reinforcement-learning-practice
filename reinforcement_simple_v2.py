@@ -41,7 +41,7 @@ nx.draw_networkx_nodes(
         200])
 nx.draw_networkx_edges(H, pos)
 nx.draw_networkx_labels(H, pos)
-plt.show()
+# plt.show()
 
 MATRIX_SIZE = 8
 
@@ -57,17 +57,37 @@ Q = np.matrix(np.zeros([MATRIX_SIZE, MATRIX_SIZE]))
 R = np.matrix(np.ones(shape=(MATRIX_SIZE, MATRIX_SIZE)))
 R *= -1
 
+# assign zeros to paths and 100 to goal-reaching point
+for point in points_list:
+    print(point)
+    if point[1] == goal:
+        R[point] = 100
+    else:
+        R[point] = 0
+
+    if point[0] == goal:
+        R[point[::-1]] = 100
+    else:
+        # reverse of point
+        R[point[::-1]] = 0
+
+# add goal point round trip
+R[goal, goal] = 100
+
+print R
+
 
 enviro_bees = np.matrix(np.zeros([MATRIX_SIZE, MATRIX_SIZE]))
 enviro_smoke = np.matrix(np.zeros([MATRIX_SIZE, MATRIX_SIZE]))
-
-initial_state = 1
 
 
 def available_actions(state):
     current_state_row = R[state, ]
     av_act = np.where(current_state_row >= 0)[1]
     return av_act
+
+
+available_act = available_actions(initial_state)
 
 
 def sample_next_action(available_actions_range):
@@ -84,8 +104,6 @@ def collect_environmental_data(action):
         found.append('s')
     return (found)
 
-
-available_act = available_actions(initial_state)
 
 action = sample_next_action(available_act)
 

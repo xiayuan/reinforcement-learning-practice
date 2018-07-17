@@ -74,12 +74,15 @@ action = sample_next_action(available_act)
 
 def update(current_state, action, gamma):
 
-    max_index = np.where(Q[action, ] == np.max(Q[action, ]))[1]
+    # max_index = np.where(Q[action, ] == np.max(Q[action, ]))[1]
+    #
+    # if max_index.shape[0] > 1:
+    #     max_index = int(np.random.choice(max_index, size=1))
+    # else:
+    #     max_index = int(max_index)
 
-    if max_index.shape[0] > 1:
-        max_index = int(np.random.choice(max_index, size=1))
-    else:
-        max_index = int(max_index)
+    # 和上面等价
+    max_index = np.argmax(Q[action, ])
     max_value = Q[action, max_index]
 
     Q[current_state, action] = R[current_state, action] + gamma * max_value
@@ -113,15 +116,17 @@ steps = [current_state]
 
 while current_state != 7:
 
-    next_step_index = np.where(
-        Q[current_state, ] == np.max(Q[current_state, ]))[1]
+    # next_step_index = np.where(
+    #     Q[current_state, ] == np.max(Q[current_state, ]))[1]
+    #
+    # if next_step_index.shape[0] > 1:
+    #     next_step_index = int(np.random.choice(next_step_index, size=1))
+    # else:
+    #     next_step_index = int(next_step_index)
 
-    if next_step_index.shape[0] > 1:
-        next_step_index = int(np.random.choice(next_step_index, size=1))
-    else:
-        next_step_index = int(next_step_index)
-
-    steps.append(next_step_index)
+    # 和上面等价
+    next_step_index = np.argmax(Q[current_state, ], )
+    steps.append(int(next_step_index))
     current_state = next_step_index
 
 print("Most efficient path:")
